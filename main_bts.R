@@ -4,9 +4,8 @@
 
 ### load DPG info's
 source("libraries.R")
-source("aux_code/read_functions.R")
-source("aux_code/plot_functions.R")
 source("info_data.R")
+source("aux_code/plot_functions.R")
 
 
 ### read csv files of experimental bivariate time series (DGP models)
