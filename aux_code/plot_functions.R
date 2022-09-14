@@ -195,6 +195,127 @@ dist_plot <- function(melt_data, min, max, brk, linf, lsup, cols,
 
 
 
+
+## Boxplot of dataframe of distributions
+boxplot_dists <- function(freq_data, min, max, brk, linf, lsup, cols,
+                          y_title = "", x_title = "", main_title = "",
+                          flag = 0) {
+  g <- ggplot(data = freq_data, 
+              aes(y = Freq, x = k,
+                  fill = Variable)) + 
+    geom_boxplot(alpha = 0.7) +
+    scale_fill_manual(values = cols) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(size = 8, face = "bold"),
+          axis.text.y = element_text(size = 8, face = "bold"),
+          legend.text = element_text(size = 8, face = "bold"),
+          axis.title.x = element_text(size = 11, face = "bold"),
+          axis.title.y = element_text(size = 11, face = "bold"),
+          plot.title = element_text(size = 12, face = "bold"),
+          legend.title = element_blank(),
+          legend.position=c(c(0.8, 0.85)),
+          panel.background = element_rect(fill = "gray97",
+                                          colour = "black",
+                                          size = 0.5, linetype = "solid"))
+  
+  ## x-axis title
+  # if(x_title == "")
+  #   g <- g + 
+  #     scale_x_discrete(breaks = c(seq(min, max, by = brk)), name = NULL)
+  # else
+    g <- g + 
+      scale_x_discrete(breaks = c(seq(min, max, by = brk)), name = x_title)
+  ## y-axis title
+  if(y_title == "")
+    g <- g + 
+      scale_y_continuous(limits = c(linf, lsup), name = NULL)
+  else
+    g <- g + 
+      scale_y_continuous(limits = c(linf, lsup), name = y_title)
+  ## main title
+  if(flag)
+    g <- g + ggtitle(NULL)
+  else
+    g <- g + ggtitle(main_title)
+  
+  return(g)
+}
+
+
+
+## Pointplot of dataframe of distributions
+pointplot_dists <- function(freq_data, min, max, brk, linf, lsup, cols, 
+                            y_title = "", x_title = "", main_title = "",
+                            is_semilog = 0, is_log = 0, flag = 0) {
+  if(is_log) {
+    freq_data$k <- as.numeric(as.character(freq_data$k))
+    freq_data$k <- log10(freq_data$k)
+  }
+  
+  g <- ggplot(data = freq_data, 
+              aes(y = Freq, x = k,
+                  group = Variable)) + 
+    geom_point(aes(colour = Variable)) +
+    scale_color_manual(values = cols) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(size = 8, face = "bold"),
+          axis.text.y = element_text(size = 8, face = "bold"),
+          legend.text = element_text(size = 8, face = "bold"),
+          axis.title.x = element_text(size = 11, face = "bold"),
+          axis.title.y = element_text(size = 11, face = "bold"),
+          plot.title = element_text(size = 12, face = "bold"),
+          legend.title = element_blank(),
+          legend.position=c(c(0.8, 0.8)),
+          panel.background = element_rect(fill = "gray97",
+                                          colour = "black",
+                                          size = 0.5, linetype = "solid"))
+  
+  ## x-axis title
+  if(x_title == "")
+    g <- g + xlab(NULL)
+  else
+    g <- g + xlab(x_title)
+  ## y-axis title
+  if(y_title == "")
+    g <- g + ylab(NULL)
+  else
+    g <- g + ylab(y_title)
+  ## main title
+  if(flag)
+    g <- g + ggtitle(NULL)
+  else
+    g <- g + ggtitle(main_title)
+  
+  ## axis scale
+  if(is_semilog) {
+    if(linf != lsup)
+      g <- g + scale_y_log10(limits = c(linf, lsup))
+    else
+      g <- g + scale_y_log10()
+    g <- g + scale_x_discrete(breaks = c(seq(min, max, by = brk)))
+  }
+  else if(is_log) {
+    if(linf != lsup)
+      g <- g + scale_y_log10(limits = c(linf, lsup))
+    else
+      g <- g + scale_y_log10()
+    x_min <- round(min(freq_data$k), 2)
+    x_max <- round(max(freq_data$k)+0.03, 2)
+    g <- g + scale_x_continuous(limits = c(x_min, x_max))
+  }
+  else {
+    if(linf != lsup)
+      g <- g + scale_y_continuous(limits = c(linf, lsup))
+    g <- g + scale_x_discrete(breaks = c(seq(min, max, by = brk)))
+  }
+  
+  return(g)
+}
+
+
+
+
+
 ## function to draw multi ggplots
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
   library(grid)
