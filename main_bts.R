@@ -2,7 +2,7 @@
 ##########          READ BTS DATA SET          ##########
 #########################################################
 
-### load DPG info's
+### load libraries, auxiliary functions and DPG info's
 source("libraries.R")
 source("info_data.R")
 source("aux_code/plot_functions.R")
@@ -49,7 +49,8 @@ plot_wgarch <- mts_plot(bts_list$wGARCH[min:max, ],
 plot_sgarch <- mts_plot(bts_list$sGARCH[min:max, ], 
                         min, max, brk,
                         colors_bts$sGARCH,
-                        "Strong GARCH", "Time", "")
+                        "Strong GARCH", "Time", "",
+                        flag = 1)
 multiplot(plot_ibwn, plot_cbwn, 
           plot_wvar, plot_svar,
           plot_wgarch, plot_sgarch,
