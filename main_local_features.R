@@ -277,3 +277,221 @@ save(ddAllPlot_ibwn, ddAllPlot_cbwn,
      ddAllPlot_wgarch, ddAllPlot_sgarch,
      file = paste0("results/ddAll_", scale_type, "_plots.RData"))
 
+
+######################################################
+### BoxPlots of Degree Distribution set
+load("results/DegreeDistribution.RData")
+k_brk <- 4
+xtitle <- "k"
+
+#########
+### INTRA
+k_min <- 2
+k_max <- 22
+linf <- 0
+lsup <- 0.35
+
+df_dd_intra_Y1 <- df_dists(dd_intra_Y1, model_names, n_inst, k_min, k_max)
+df_dd_intra_Y2 <- df_dists(dd_intra_Y2, model_names, n_inst, k_min, k_max)
+
+## WN
+df_dd_intra_ibwn <- rbind(cbind(freq_df(df_dd_intra_Y1$iBWN), "Variable" = "Y_1"),
+                          cbind(freq_df(df_dd_intra_Y2$iBWN), "Variable" = "Y_2"))
+ddIntraBoxPlot_ibwn <- boxplot_dists(df_dd_intra_ibwn,
+                                     k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                     colors_bts$iBWN,
+                                     "", "", "P(k): Intra-Layer")
+df_dd_intra_cbwn <- rbind(cbind(freq_df(df_dd_intra_Y1$cBWN), "Variable" = "Y_1"),
+                          cbind(freq_df(df_dd_intra_Y2$cBWN), "Variable" = "Y_2"))
+ddIntraBoxPlot_cbwn <- boxplot_dists(df_dd_intra_cbwn,
+                                     k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                     colors_bts$cBWN,
+                                     "", "", "")
+## VAR
+df_dd_intra_wvar <- rbind(cbind(freq_df(df_dd_intra_Y1$wVAR), "Variable" = "Y_1"),
+                          cbind(freq_df(df_dd_intra_Y2$wVAR), "Variable" = "Y_2"))
+ddIntraBoxPlot_wvar <- boxplot_dists(df_dd_intra_wvar,
+                                     k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                     colors_bts$wVAR,
+                                     "", "", "")
+df_dd_intra_svar <- rbind(cbind(freq_df(df_dd_intra_Y1$sVAR), "Variable" = "Y_1"),
+                          cbind(freq_df(df_dd_intra_Y2$sVAR), "Variable" = "Y_2"))
+ddIntraBoxPlot_svar <- boxplot_dists(df_dd_intra_svar,
+                                     k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                     colors_bts$sVAR,
+                                     "", "", "")
+## GARCH
+df_dd_intra_wgarch <- rbind(cbind(freq_df(df_dd_intra_Y1$wGARCH), "Variable" = "Y_1"),
+                            cbind(freq_df(df_dd_intra_Y2$wGARCH), "Variable" = "Y_2"))
+ddIntraBoxPlot_wgarch <- boxplot_dists(df_dd_intra_wgarch,
+                                       k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                       colors_bts$wGARCH,
+                                       "", "", "")
+df_dd_intra_sgarch <- rbind(cbind(freq_df(df_dd_intra_Y1$sGARCH), "Variable" = "Y_1"),
+                            cbind(freq_df(df_dd_intra_Y2$sGARCH), "Variable" = "Y_2"))
+ddIntraBoxPlot_sgarch <- boxplot_dists(df_dd_intra_sgarch,
+                                       k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                       colors_bts$sGARCH,
+                                       "", xtitle, "",
+                                       flag = 0)
+
+multiplot(ddIntraBoxPlot_ibwn, ddIntraBoxPlot_cbwn,
+          ddIntraBoxPlot_wvar, ddIntraBoxPlot_svar,
+          ddIntraBoxPlot_wgarch, ddIntraBoxPlot_sgarch,
+          cols = 6)
+save(ddIntraBoxPlot_ibwn, ddIntraBoxPlot_cbwn,
+     ddIntraBoxPlot_wvar, ddIntraBoxPlot_svar,
+     ddIntraBoxPlot_wgarch, ddIntraBoxPlot_sgarch,
+     file = paste0("results/ddIntraBoxPlot.RData"))
+
+
+#########
+### INTER
+k_min <- 2
+k_max <- 14
+linf <- 0
+lsup <- 1
+
+df_dd_inter_Y1 <- df_dists(dd_inter_Y1, model_names, n_inst, k_min, k_max)
+df_dd_inter_Y2 <- df_dists(dd_inter_Y2, model_names, n_inst, k_min, k_max)
+
+## WN
+df_dd_inter_ibwn <- rbind(cbind(freq_df(df_dd_inter_Y1$iBWN), "Variable" = "Y_1"),
+                          cbind(freq_df(df_dd_inter_Y2$iBWN), "Variable" = "Y_2"))
+ddInterBoxPlot_ibwn <- boxplot_dists(df_dd_inter_ibwn,
+                                     k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                     colors_bts$iBWN,
+                                     "", "", "P(k): Inter-Layer")
+df_dd_inter_cbwn <- rbind(cbind(freq_df(df_dd_inter_Y1$cBWN), "Variable" = "Y_1"),
+                          cbind(freq_df(df_dd_inter_Y2$cBWN), "Variable" = "Y_2"))
+ddInterBoxPlot_cbwn <- boxplot_dists(df_dd_inter_cbwn,
+                                     k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                     colors_bts$cBWN,
+                                     "", "", "")
+## VAR
+df_dd_inter_wvar <- rbind(cbind(freq_df(df_dd_inter_Y1$wVAR), "Variable" = "Y_1"),
+                          cbind(freq_df(df_dd_inter_Y2$wVAR), "Variable" = "Y_2"))
+ddInterBoxPlot_wvar <- boxplot_dists(df_dd_inter_wvar,
+                                     k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                     colors_bts$wVAR,
+                                     "", "", "")
+df_dd_inter_svar <- rbind(cbind(freq_df(df_dd_inter_Y1$sVAR), "Variable" = "Y_1"),
+                          cbind(freq_df(df_dd_inter_Y2$sVAR), "Variable" = "Y_2"))
+ddInterBoxPlot_svar <- boxplot_dists(df_dd_inter_svar,
+                                     k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                     colors_bts$sVAR,
+                                     "", "", "")
+## GARCH
+df_dd_inter_wgarch <- rbind(cbind(freq_df(df_dd_inter_Y1$wGARCH), "Variable" = "Y_1"),
+                            cbind(freq_df(df_dd_inter_Y2$wGARCH), "Variable" = "Y_2"))
+ddInterBoxPlot_wgarch <- boxplot_dists(df_dd_inter_wgarch,
+                                       k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                       colors_bts$wGARCH,
+                                       "", "", "")
+df_dd_inter_sgarch <- rbind(cbind(freq_df(df_dd_inter_Y1$sGARCH), "Variable" = "Y_1"),
+                            cbind(freq_df(df_dd_inter_Y2$sGARCH), "Variable" = "Y_2"))
+ddInterBoxPlot_sgarch <- boxplot_dists(df_dd_inter_sgarch,
+                                       k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                       colors_bts$sGARCH,
+                                       "", xtitle, "",
+                                       flag = 0)
+
+multiplot(ddInterBoxPlot_ibwn, ddInterBoxPlot_cbwn,
+          ddInterBoxPlot_wvar, ddInterBoxPlot_svar,
+          ddInterBoxPlot_wgarch, ddInterBoxPlot_sgarch,
+          cols = 6)
+save(ddInterBoxPlot_ibwn, ddInterBoxPlot_cbwn,
+     ddInterBoxPlot_wvar, ddInterBoxPlot_svar,
+     ddInterBoxPlot_wgarch, ddInterBoxPlot_sgarch,
+     file = paste0("results/ddInterBoxPlot.RData"))
+
+
+#########
+### ALL
+k_min <- 4
+k_max <- 32
+linf <- 0
+lsup <- 0.35
+
+df_dd_all_Y1 <- df_dists(dd_all_Y1, model_names, n_inst, k_min, k_max)
+df_dd_all_Y2 <- df_dists(dd_all_Y2, model_names, n_inst, k_min, k_max)
+
+## WN
+df_dd_all_ibwn <- rbind(cbind(freq_df(df_dd_all_Y1$iBWN), "Variable" = "Y_1"),
+                        cbind(freq_df(df_dd_all_Y2$iBWN), "Variable" = "Y_2"))
+ddAllBoxPlot_ibwn <- boxplot_dists(df_dd_all_ibwn,
+                                   k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                   colors_bts$iBWN,
+                                   "", "", "P(k): All-Layer")
+df_dd_all_cbwn <- rbind(cbind(freq_df(df_dd_all_Y1$cBWN), "Variable" = "Y_1"),
+                        cbind(freq_df(df_dd_all_Y2$cBWN), "Variable" = "Y_2"))
+ddAllBoxPlot_cbwn <- boxplot_dists(df_dd_all_cbwn,
+                                   k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                   colors_bts$cBWN,
+                                   "", "", "")
+## VAR
+df_dd_all_wvar <- rbind(cbind(freq_df(df_dd_all_Y1$wVAR), "Variable" = "Y_1"),
+                        cbind(freq_df(df_dd_all_Y2$wVAR), "Variable" = "Y_2"))
+ddAllBoxPlot_wvar <- boxplot_dists(df_dd_all_wvar,
+                                   k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                   colors_bts$wVAR,
+                                   "", "", "")
+df_dd_all_svar <- rbind(cbind(freq_df(df_dd_all_Y1$sVAR), "Variable" = "Y_1"),
+                        cbind(freq_df(df_dd_all_Y2$sVAR), "Variable" = "Y_2"))
+ddAllBoxPlot_svar <- boxplot_dists(df_dd_all_svar,
+                                   k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                   colors_bts$sVAR,
+                                   "", "", "")
+## GARCH
+df_dd_all_wgarch <- rbind(cbind(freq_df(df_dd_all_Y1$wGARCH), "Variable" = "Y_1"),
+                          cbind(freq_df(df_dd_all_Y2$wGARCH), "Variable" = "Y_2"))
+ddAllBoxPlot_wgarch <- boxplot_dists(df_dd_all_wgarch,
+                                     k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                     colors_bts$wGARCH,
+                                     "", "", "")
+df_dd_all_sgarch <- rbind(cbind(freq_df(df_dd_all_Y1$sGARCH), "Variable" = "Y_1"),
+                          cbind(freq_df(df_dd_all_Y2$sGARCH), "Variable" = "Y_2"))
+ddAllBoxPlot_sgarch <- boxplot_dists(df_dd_all_sgarch,
+                                     k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                     colors_bts$sGARCH,
+                                     "", xtitle, "",
+                                     flag = 0)
+
+multiplot(ddAllBoxPlot_ibwn, ddAllBoxPlot_cbwn,
+          ddAllBoxPlot_wvar, ddAllBoxPlot_svar,
+          ddAllBoxPlot_wgarch, ddAllBoxPlot_sgarch,
+          cols = 6)
+save(ddAllBoxPlot_ibwn, ddAllBoxPlot_cbwn,
+     ddAllBoxPlot_wvar, ddAllBoxPlot_svar,
+     ddAllBoxPlot_wgarch, ddAllBoxPlot_sgarch,
+     file = paste0("results/ddAllBoxPlot.RData"))
+
+
+
+######################################################
+### PointPlots of Degree Distribution set
+semilog <- 1
+log <- 0
+
+### INTRA
+k_min <- 2
+k_max <- 22
+linf <- 0 # 0.0001 # 0
+lsup <- 0.35      # 1      # 0.35
+
+## WN
+pointplot_dists(df_dd_intra_ibwn,
+                k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                colors_bts$iBWN,
+                "", "", "P(k): Intra-Layer",
+                is_semilog = semilog, is_log = log)
+
+
+### INTER
+df_dd_inter_Y1 <- df_dists(dd_inter_Y1, model_names, n_inst, 2, 14)
+df_dd_inter_Y2 <- df_dists(dd_inter_Y2, model_names, n_inst, 2, 14)
+
+### ALL
+df_dd_all_Y1 <- df_dists(dd_all_Y1, model_names, n_inst, 4, 32)
+df_dd_all_Y2 <- df_dists(dd_all_Y2, model_names, n_inst, 4, 32)
+
