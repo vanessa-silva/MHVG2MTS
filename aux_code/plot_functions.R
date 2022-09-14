@@ -51,7 +51,8 @@ mts_plot <- function(mts, min, max, brk, cols,
 
 
 ## ACF plot
-acf_plot <- function(ts, y_title = "", x_title = "", main_title = "", linf = -1, lsup = -1) {
+acf_plot <- function(ts, y_title = "", x_title = "", main_title = "", 
+                     linf = -1, lsup = -1) {
   g <- ggAcf(ts, lag.max = 15) +
     ggtitle(main_title) +
     theme(axis.text.x = element_text(size = 8, face = "bold"),
@@ -82,7 +83,8 @@ acf_plot <- function(ts, y_title = "", x_title = "", main_title = "", linf = -1,
 
 
 ## CCF plot
-ccf_plot <- function(ts_a, ts_b, y_title = "", x_title = "", main_title = "", linf = -1, lsup = -1, flag = 0) {
+ccf_plot <- function(ts_a, ts_b, y_title = "", x_title = "", main_title = "", 
+                     linf = -1, lsup = -1, flag = 0) {
   g <- ggCcf(ts_a, ts_b, lag.max = 15) +
     theme(axis.text.x = element_text(size = 8, face = "bold"),
           axis.text.y = element_text(size = 8, face = "bold"),
@@ -116,6 +118,80 @@ ccf_plot <- function(ts_a, ts_b, y_title = "", x_title = "", main_title = "", li
   
   return(g)
 }
+
+
+
+
+
+## Distribution plot
+dist_plot <- function(melt_data, min, max, brk, linf, lsup, cols, 
+                      y_title = "", x_title = "", main_title = "",
+                      is_smooth = 0, is_semilog = 0, is_log = 0, flag = 0) {
+  if(is_log) {
+    melt_data$k <- as.numeric(as.character(melt_data$k))
+    melt_data$k <- log10(melt_data$k)
+  }
+  
+  g <- ggplot(melt_data,
+              aes(x = k, y = value,
+                  group = Variable)) +
+    geom_line(aes(colour = Variable)) +
+    geom_point(aes(colour = Variable)) +
+    scale_color_manual(values = cols) +
+    theme(axis.text.x = element_text(size = 8, face = "bold"),
+          axis.text.y = element_text(size = 8, face = "bold"),
+          legend.text = element_text(size = 8, face = "bold"),
+          axis.title.x = element_text(size = 11, face = "bold"),
+          axis.title.y = element_text(size = 11, face = "bold"),
+          plot.title = element_text(size = 12, face = "bold"),
+          legend.title = element_blank(),
+          legend.position=c(c(0.8, 0.85)),
+          panel.background = element_rect(fill = "gray97",
+                                          colour = "black",
+                                          size = 0.5, linetype = "solid"))
+  
+  ## x-axis title
+  if(x_title == "")
+    g <- g + xlab(NULL)
+  else
+    g <- g + xlab(x_title)
+  ## y-axis title
+  if(y_title == "")
+    g <- g + ylab(NULL)
+  else
+    g <- g + ylab(y_title)
+  ## main title
+  if(flag)
+    g <- g + ggtitle(NULL)
+  else
+    g <- g + ggtitle(main_title)
+  
+  ## axis scale
+  if(is_semilog) {
+    if(linf != lsup)
+      g <- g + scale_y_log10(limits = c(linf, lsup))
+    else
+      g <- g + scale_y_log10()
+    g <- g + scale_x_discrete(breaks = c(seq(min, max, by = brk)))
+  }
+  else if(is_log) {
+    if(linf != lsup)
+      g <- g + scale_y_log10(limits = c(linf, lsup))
+    else
+      g <- g + scale_y_log10()
+    x_min <- round(min(melt_data$k), 2)
+    x_max <- round(max(melt_data$k)+0.03, 2)
+    g <- g + scale_x_continuous(limits = c(x_min, x_max))
+  }
+  else {
+    if(linf != lsup)
+      g <- g + scale_y_continuous(limits = c(linf, lsup))
+    g <- g + scale_x_discrete(breaks = c(seq(min, max, by = brk)))
+  }
+  
+  return(g)
+}
+
 
 
 
