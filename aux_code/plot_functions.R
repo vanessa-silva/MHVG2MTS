@@ -189,6 +189,10 @@ dist_plot <- function(melt_data, min, max, brk, linf, lsup, cols,
     g <- g + scale_x_discrete(breaks = c(seq(min, max, by = brk)))
   }
   
+  ## smooth the curve
+  if(is_smooth)
+    g <- g + geom_smooth(aes(colour = Variable))
+  
   return(g)
 }
 
@@ -246,7 +250,7 @@ boxplot_dists <- function(freq_data, min, max, brk, linf, lsup, cols,
 ## Pointplot of dataframe of distributions
 pointplot_dists <- function(freq_data, min, max, brk, linf, lsup, cols, 
                             y_title = "", x_title = "", main_title = "",
-                            is_semilog = 0, is_log = 0, flag = 0) {
+                            is_smooth = 0, is_semilog = 0, is_log = 0, flag = 0) {
   if(is_log) {
     freq_data$k <- as.numeric(as.character(freq_data$k))
     freq_data$k <- log10(freq_data$k)
@@ -308,6 +312,10 @@ pointplot_dists <- function(freq_data, min, max, brk, linf, lsup, cols,
       g <- g + scale_y_continuous(limits = c(linf, lsup))
     g <- g + scale_x_discrete(breaks = c(seq(min, max, by = brk)))
   }
+  
+  ## smooth the curve
+  if(is_smooth)
+    g <- g + geom_smooth(aes(colour = Variable))
   
   return(g)
 }

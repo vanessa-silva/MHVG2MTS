@@ -470,28 +470,169 @@ save(ddAllBoxPlot_ibwn, ddAllBoxPlot_cbwn,
 
 ######################################################
 ### PointPlots of Degree Distribution set
-semilog <- 1
-log <- 0
+smooth <- 1
+semilog <- 0
+log <- 1
 
+scale_type <- "scalefree"
+if(semilog)
+  scale_type <- "semilogscale"
+if(log)
+  scale_type <- "logscale"
+xtitle <- "k"
+if(log)
+  xtitle <- "log(k)"
+
+#########
 ### INTRA
 k_min <- 2
 k_max <- 22
-linf <- 0 # 0.0001 # 0
-lsup <- 0.35      # 1      # 0.35
+linf <- 0.0001
+lsup <- 1
 
 ## WN
-pointplot_dists(df_dd_intra_ibwn,
-                k_min, k_max, k_brk, linf = linf, lsup = lsup,
-                colors_bts$iBWN,
-                "", "", "P(k): Intra-Layer",
-                is_semilog = semilog, is_log = log)
+ddIntraPointPlot_ibwn <- pointplot_dists(df_dd_intra_ibwn,
+                                         k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                         colors_bts$iBWN,
+                                         "", "", "P(k): Intra-Layer",
+                                         is_smooth = smooth, is_semilog = semilog, is_log = log)
+ddIntraPointPlot_cbwn <- pointplot_dists(df_dd_intra_cbwn,
+                                         k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                         colors_bts$cBWN,
+                                         "", "", "",
+                                         is_smooth = smooth, is_semilog = semilog, is_log = log)
+## VAR
+ddIntraPointPlot_wvar <- pointplot_dists(df_dd_intra_wvar,
+                                         k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                         colors_bts$wVAR,
+                                         "", "", "",
+                                         is_smooth = smooth, is_semilog = semilog, is_log = log)
+ddIntraPointPlot_svar <- pointplot_dists(df_dd_intra_svar,
+                                         k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                         colors_bts$sVAR,
+                                         "", "", "",
+                                         is_smooth = smooth, is_semilog = semilog, is_log = log)
+## GARCG
+ddIntraPointPlot_wgarch <- pointplot_dists(df_dd_intra_wgarch,
+                                           k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                           colors_bts$wGARCH,
+                                           "", "", "",
+                                           is_smooth = smooth, is_semilog = semilog, is_log = log)
+ddIntraPointPlot_sgarch <- pointplot_dists(df_dd_intra_sgarch,
+                                           k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                           colors_bts$sGARCH,
+                                           "", "", "",
+                                           is_smooth = smooth, is_semilog = semilog, is_log = log, 
+                                           flag = 0)
 
+multiplot(ddIntraPointPlot_ibwn, ddIntraPointPlot_cbwn,
+          ddIntraPointPlot_wvar, ddIntraPointPlot_svar,
+          ddIntraPointPlot_wgarch, ddIntraPointPlot_sgarch,
+          cols = 6)
+save(ddIntraPointPlot_ibwn, ddIntraPointPlot_cbwn,
+     ddIntraPointPlot_wvar, ddIntraPointPlot_svar,
+     ddIntraPointPlot_wgarch, ddIntraPointPlot_sgarch,
+     file = paste0("results/ddIntraPointPlot_", scale_type, ".RData"))
 
+#########
 ### INTER
-df_dd_inter_Y1 <- df_dists(dd_inter_Y1, model_names, n_inst, 2, 14)
-df_dd_inter_Y2 <- df_dists(dd_inter_Y2, model_names, n_inst, 2, 14)
+k_min <- 2
+k_max <- 14
+linf <- 0.0001
+lsup <- 1
 
+## WN
+ddInterPointPlot_ibwn <- pointplot_dists(df_dd_inter_ibwn,
+                                         k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                         colors_bts$iBWN,
+                                         "", "", "P(k): Inter-Layer",
+                                         is_smooth = smooth, is_semilog = semilog, is_log = log)
+ddInterPointPlot_cbwn <- pointplot_dists(df_dd_inter_cbwn,
+                                         k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                         colors_bts$cBWN,
+                                         "", "", "",
+                                         is_smooth = smooth, is_semilog = semilog, is_log = log)
+## VAR
+ddInterPointPlot_wvar <- pointplot_dists(df_dd_inter_wvar,
+                                         k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                         colors_bts$wVAR,
+                                         "", "", "",
+                                         is_smooth = smooth, is_semilog = semilog, is_log = log)
+ddInterPointPlot_svar <- pointplot_dists(df_dd_inter_svar,
+                                         k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                         colors_bts$sVAR,
+                                         "", "", "",
+                                         is_smooth = smooth, is_semilog = semilog, is_log = log)
+## GARCG
+ddInterPointPlot_wgarch <- pointplot_dists(df_dd_inter_wgarch,
+                                           k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                           colors_bts$wGARCH,
+                                           "", "", "",
+                                           is_smooth = smooth, is_semilog = semilog, is_log = log)
+ddInterPointPlot_sgarch <- pointplot_dists(df_dd_inter_sgarch,
+                                           k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                           colors_bts$sGARCH,
+                                           "", "", "",
+                                           is_smooth = smooth, is_semilog = semilog, is_log = log, 
+                                           flag = 0)
+
+multiplot(ddInterPointPlot_ibwn, ddInterPointPlot_cbwn,
+          ddInterPointPlot_wvar, ddInterPointPlot_svar,
+          ddInterPointPlot_wgarch, ddInterPointPlot_sgarch,
+          cols = 6)
+save(ddInterPointPlot_ibwn, ddInterPointPlot_cbwn,
+     ddInterPointPlot_wvar, ddInterPointPlot_svar,
+     ddInterPointPlot_wgarch, ddInterPointPlot_sgarch,
+     file = paste0("results/ddInterPointPlot_", scale_type, ".RData"))
+
+#########
 ### ALL
-df_dd_all_Y1 <- df_dists(dd_all_Y1, model_names, n_inst, 4, 32)
-df_dd_all_Y2 <- df_dists(dd_all_Y2, model_names, n_inst, 4, 32)
+k_min <- 4
+k_max <- 32
+linf <- 0.0001
+lsup <- 1
+
+## WN
+ddAllPointPlot_ibwn <- pointplot_dists(df_dd_all_ibwn,
+                                       k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                       colors_bts$iBWN,
+                                       "", "", "P(k): Inter-Layer",
+                                       is_smooth = smooth, is_semilog = semilog, is_log = log)
+ddAllPointPlot_cbwn <- pointplot_dists(df_dd_all_cbwn,
+                                       k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                       colors_bts$cBWN,
+                                       "", "", "",
+                                       is_smooth = smooth, is_semilog = semilog, is_log = log)
+## VAR
+ddAllPointPlot_wvar <- pointplot_dists(df_dd_all_wvar,
+                                       k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                       colors_bts$wVAR,
+                                       "", "", "",
+                                       is_smooth = smooth, is_semilog = semilog, is_log = log)
+ddAllPointPlot_svar <- pointplot_dists(df_dd_all_svar,
+                                       k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                       colors_bts$sVAR,
+                                       "", "", "",
+                                       is_smooth = smooth, is_semilog = semilog, is_log = log)
+## GARCG
+ddAllPointPlot_wgarch <- pointplot_dists(df_dd_all_wgarch,
+                                         k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                         colors_bts$wGARCH,
+                                         "", "", "",
+                                         is_smooth = smooth, is_semilog = semilog, is_log = log)
+ddAllPointPlot_sgarch <- pointplot_dists(df_dd_all_sgarch,
+                                         k_min, k_max, k_brk, linf = linf, lsup = lsup,
+                                         colors_bts$sGARCH,
+                                         "", "", "",
+                                         is_smooth = smooth, is_semilog = semilog, is_log = log,
+                                         flag = 0)
+
+multiplot(ddAllPointPlot_ibwn, ddAllPointPlot_cbwn,
+          ddAllPointPlot_wvar, ddAllPointPlot_svar,
+          ddAllPointPlot_wgarch, ddAllPointPlot_sgarch,
+          cols = 6)
+save(ddAllPointPlot_ibwn, ddAllPointPlot_cbwn,
+     ddAllPointPlot_wvar, ddAllPointPlot_svar,
+     ddAllPointPlot_wgarch, ddAllPointPlot_sgarch,
+     file = paste0("results/ddAllPointPlot_", scale_type, ".RData"))
 
