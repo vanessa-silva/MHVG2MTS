@@ -198,8 +198,6 @@ dist_plot <- function(melt_data, min, max, brk, linf, lsup, cols,
 
 
 
-
-
 ## Boxplot of dataframe of distributions
 boxplot_dists <- function(freq_data, min, max, brk, linf, lsup, cols,
                           y_title = "", x_title = "", main_title = "",
@@ -319,6 +317,40 @@ pointplot_dists <- function(freq_data, min, max, brk, linf, lsup, cols,
   
   return(g)
 }
+
+
+
+
+## function to draw boxplots by class models
+### data          - is a data.frame with columns: features and class
+### models        - is a array with class models
+### level_models  - is a array with the level/order of unique class models
+### feature       - column name of the feature to draw in boxplot
+### title         - the title plot
+### cols          - a array of colors by unique class models
+ggplot_models <- function(data, models, level_models, feature, title, cols) {
+  # manual levels
+  data$models2 <- factor(models, levels = level_models)
+  
+  g <- ggplot(data, aes(x = models2, y = feature, fill = models2)) +
+    geom_boxplot(alpha = 0.7) +
+    scale_x_discrete(name = "Model") +
+    scale_y_continuous(name = title) +
+    scale_fill_manual(values = cols) +
+    theme(axis.text.x = element_text(size = 13, angle = 15, face="bold"),
+          axis.text.y = element_text(face="bold"),
+          axis.title.x = element_text(size = 14, face="bold"),
+          axis.title.y = element_text(size = 15, face="bold"),
+          legend.position="none",
+          panel.background = element_rect(fill = "gray97",
+                                          colour = "black",
+                                          size = 0.5, linetype = "solid"),)
+  
+  return(g)
+}
+### example of usage:  
+##  g <- ggplot_models(metrics, models, level_models, feature, title, cols)
+##  g <- ggplot_models(metrics[-wo, ], models[-wo], feature, title, cols)
 
 
 

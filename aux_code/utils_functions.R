@@ -71,3 +71,46 @@ freq_df <- function(df_data) {
   
   return(dd)
 }
+
+
+
+## generating table with(out) colors degree's
+draw_tables <- function(table_data, colors = 0, latex = 0) {
+  table_data <- table_data %>% round(5)
+  if(colors) {
+    if(latex) {
+      table_data %>%
+        mutate_at(colnames(table_data), color_tile("white", "red")) %>%
+        select(everything()) %>%
+        kable("latex", escape = F) %>%
+        kable_styling(bootstrap_options = c("hover", "condensed")) %>%
+        column_spec(1:ncol(table_data), color = "black") %>%
+        row_spec(0, bold = T, color = "black")
+    }
+    else {
+      table_data %>%
+        mutate_at(colnames(table_data), color_tile("white", "red")) %>%
+        select(everything()) %>%
+        kable("html", escape = F, table.attr = "style='width:100%;'") %>%
+        kable_styling(bootstrap_options = c("hover", "condensed")) %>%
+        column_spec(1:ncol(table_data), color = "black") %>%
+        row_spec(0, bold = T, color = "black")
+    }
+  }
+  else {
+    if(latex) {
+      table_data %>%
+        kable("latex", escape = F) %>%
+        kable_styling(bootstrap_options = c("hover", "condensed")) %>%
+        column_spec(1:ncol(table_data), color = "black") %>%
+        row_spec(0, bold = T, color = "black")
+    }
+    else {
+      table_data %>%
+        kable("html", escape = F, table.attr = "style='width:100%;'") %>%
+        kable_styling(bootstrap_options = c("hover", "condensed")) %>%
+        column_spec(1:ncol(table_data), color = "black") %>%
+        row_spec(0, bold = T, color = "black")
+    }
+  }
+}
