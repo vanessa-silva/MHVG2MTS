@@ -114,3 +114,42 @@ draw_tables <- function(table_data, colors = 0, latex = 0) {
     }
   }
 }
+
+
+
+## computing PCA
+comp_pca <- function(data, norm = FALSE, prec = 1) {
+  
+  ##calculate PCA
+  pca <- prcomp(data, center = TRUE, scale. = norm)
+  
+  #decide number of components
+  cum_prop <- summary(pca)$importance[3, ]
+  if(which(cum_prop >= prec)[1] == 1)
+    ncp <- which(cum_prop >= prec)[2]
+  else
+    ncp <- which(cum_prop >= prec)[1]
+  
+  res <- list("pca" = pca, 
+              "impor_components" = cum_prop, 
+              "n_components" = ncp)
+  return(res)
+}
+
+
+
+## generating module to compute PCA analysis
+pca_results <- function(data, col, norm = FALSE, prec = 1, title = "MNet Features") {
+  
+  pca_res <- comp_pca(data[, -ncol(data)], norm)
+  pca <- pca_res$pca
+  pcaplots <- plots_pca(pca,
+                        as.factor(data[, ncol(data)]),
+                        pca_res$n_components,
+                        col, title = title)
+  
+  res <- list("PCA_res" = pca_res,
+              "PCA" = pca,
+              "PCAplots" = pcaplots)
+  return(res)
+}

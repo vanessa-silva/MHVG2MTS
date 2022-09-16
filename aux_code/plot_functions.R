@@ -321,6 +321,7 @@ pointplot_dists <- function(freq_data, min, max, brk, linf, lsup, cols,
 
 
 
+
 ## function to draw boxplots by class models
 ### data          - is a data.frame with columns: features and class
 ### models        - is a array with class models
@@ -351,6 +352,69 @@ ggplot_models <- function(data, models, level_models, feature, title, cols) {
 ### example of usage:  
 ##  g <- ggplot_models(metrics, models, level_models, feature, title, cols)
 ##  g <- ggplot_models(metrics[-wo, ], models[-wo], feature, title, cols)
+
+
+
+
+
+## draw PCA plot
+plots_pca <- function(pca, true_classes, ncp, col, title = "MNet Features") {
+  ## draw two-component plot: Biplot of individuals of variables
+  biplot <- fviz_pca_biplot(pca,
+                            palette = col,
+                            geom.ind = "point",
+                            fill.ind = true_classes,
+                            col.ind = "black",
+                            pointshape = 21,
+                            pointsize = 2,
+                            addEllipses = TRUE,
+                            labelsize = 5,
+                            #alpha.var ="contrib",
+                            col.var = "contrib",
+                            gradient.cols = c("#F0E009", "#DC5F96", "#604B70"), ## yellow - violet - purple
+                            repel = TRUE,
+                            legend.title = list(fill = "Models",
+                                                color = "Contrib"#, alpha = "Contrib"
+                                                )
+  ) + 
+    theme(axis.text.x = element_text(size = 8, face = "bold"),
+          axis.text.y = element_text(size = 8, face = "bold"),
+          axis.title.x = element_text(size = 14, face="bold"),
+          axis.title.y = element_text(size = 14, face="bold"),
+          legend.text = element_text(size = 9, face = "bold"),
+          legend.title = element_text(size = 10, face = "bold"),
+          plot.title = element_text(size = 16, face = "bold"),
+          panel.background = element_rect(fill = "gray97",
+                                          colour = "black",
+                                          size = 0.5, linetype = "solid"))
+  
+  ## draw contribution of variables
+  var <- get_pca_var(pca)
+  corrplot <- corrplot(var$contrib[, 1:as.integer(ncp)], 
+                       is.corr = FALSE, tl.srt = 45)
+  
+  ## draw total contribution of PC's
+  barplot <- fviz_contrib(pca, choice = "var", 
+                          axes = 1:3, top = 10, 
+                          fill = "#48D1CC", color = "black") +
+    ggtitle("Contribution of Variables to All Dimensions") +
+    xlab(title) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(size = 10, face = "bold"),
+          axis.text.y = element_text(size = 10, face = "bold"),
+          axis.title.x = element_text(size = 12, face="bold"),
+          axis.title.y = element_text(size = 12, face="bold"),
+          plot.title = element_text(size = 14, face = "bold"),
+          panel.background = element_rect(fill = "gray97",
+                                          colour = "black",
+                                          size = 0.5, linetype = "solid"))
+  
+  res <- list("pca_plot" = biplot,
+              "corrplot" = corrplot,
+              "bar_plot" = barplot)
+  
+  return(res)
+}
 
 
 
