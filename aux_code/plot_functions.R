@@ -420,6 +420,59 @@ plots_pca <- function(pca, true_classes, ncp, col, title = "MNet Features") {
 
 
 
+## Boxplot of dataframe with clustring evaluation measures results
+boxplot_clust <- function(df_data, y_title = "", main_title = "") {
+  g <- ggplot(data = df_data, aes(y = Freq, x = k)) +
+    geom_boxplot() +
+    scale_y_continuous(name = y_title) +
+    scale_x_discrete(name = "Number of Clusters (k)") +
+    ggtitle(main_title) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(size = 14, face="bold"),
+          axis.text.y = element_text(size = 14, face="bold"),
+          axis.title.x = element_text(size = 16, face="bold"),
+          axis.title.y = element_text(size = 16, face="bold"),
+          legend.position="none",
+          plot.title = element_text(size = 16, face = "bold.italic"),
+          panel.background = element_rect(fill = "white",
+                                          colour = "grey80",
+                                          size = .5, linetype = "solid"))
+  
+  return(g)
+}
+
+
+
+## draw jitterplot of the clusters
+plots_clusters <- function(data, true_classes, cluster_fit, col, main_title = "Cluster Analysis") {
+  g <- ggplot(data,
+              aes(x = true_classes, y = cluster_fit$cluster,
+                  fill = true_classes)) +
+    geom_boxplot(fill = "white") +
+    geom_jitter(aes(color = true_classes),
+                alpha = 0.4) +
+    scale_x_discrete(name = "Model") +
+    scale_y_continuous(name = "Cluster") +
+    ggtitle(main_title) +
+    scale_color_manual(values = col) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(size = 12, face = "bold"),
+          axis.text.y = element_text(size = 12, face = "bold"),
+          axis.title.x = element_text(size = 14, face="bold"),
+          axis.title.y = element_text(size = 14, face="bold"),
+          plot.title = element_text(size = 16, face = "bold"),
+          legend.position="none",
+          panel.background = element_rect(fill = "gray97",
+                                          colour = "black",
+                                          size = 0.5, linetype = "solid"))
+  
+  return(g)
+}
+
+
+
+
+
 ## function to draw multi ggplots
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
   library(grid)
