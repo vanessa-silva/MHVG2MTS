@@ -4,4 +4,4 @@ This is the original implementation corresponding to the DGP analysis presented 
 
 
 ## Requirements
-- R (>= 3.6.0)
+- R (>= 3.5.0)
