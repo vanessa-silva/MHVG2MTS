@@ -5,7 +5,6 @@
 
 ### load libraries, auxiliary functions and DPG info's
 source("libraries.R")
-source("info_data.R")
 source("aux_code/utils_functions.R")
 source("aux_code/plot_functions.R")
 
