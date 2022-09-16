@@ -9,11 +9,11 @@ source("info_data.R")
 source("aux_code/utils_functions.R")
 source("aux_code/plot_functions.R")
 
+load("results/GlobalFeatures.RData")
+
 
 ######################################################
 ### Analyse Global Features
-load("results/GlobalFeatures.RData")
-
 
 ### INTRA
 ## no-normalized
@@ -118,3 +118,81 @@ multiplot(bp_relat_ard1, bp_relat_ard2,
           bp_relat_jsintra, bp_relat_jsinter,
           bp_relat_jsall,  
           cols = 5)
+
+
+
+######################################################
+### PCA analysis of features
+norm <- FALSE   ## if is z-normalized
+colors <- c("darkorange", "green3",  
+            "cornflowerblue", "red",
+            "cyan", "violetred1")
+
+#########
+### Intra
+GlobalIntra_norm <- cbind(GlobalIntra_Y1_norm[, -ncol(GlobalIntra_Y1_norm)],
+                          GlobalIntra_Y2_norm)
+colnames(GlobalIntra_norm) <- c("k_1", "d_1", "S_1", "Q_1",
+                                "k_2", "d_2", "S_2", "Q_2",
+                                "Model")
+
+pca_res_IntraFeatures <- pca_results(GlobalIntra_norm, col = colors,
+                                     title = "Intra-layer MNet Features")
+pca_res_IntraFeatures$PCAplots$pca_plot
+pca_res_IntraFeatures$PCAplots$bar_plot
+
+#########
+### Inter
+colnames(GlobalInter_norm) <- c("k_1,2", "d_1,2", "S_1,2", "Q_1,2",
+                                "Model")
+
+pca_res_InterFeatures <- pca_results(GlobalInter_norm, col = colors,
+                                     title = "Inter-layer MNet Features")
+pca_res_InterFeatures$PCAplots$pca_plot
+pca_res_InterFeatures$PCAplots$bar_plot
+
+#########
+### All
+colnames(GlobalAll_norm) <- c("k", "d", "S", "Q",
+                              "Model")
+
+pca_res_AllFeatures <- pca_results(GlobalAll_norm, col = colors,
+                                   title = "All-layer MNet Features")
+pca_res_AllFeatures$PCAplots$pca_plot
+pca_res_AllFeatures$PCAplots$bar_plot
+
+#########
+### Relational
+colnames(GlobalRelat_norm) <- c("r_1,2", "r_2,1",
+                                "JS_intra", "JS_inter", "JS_all",
+                                "Model")
+
+pca_res_RelatFeatures <- pca_results(GlobalRelat_norm, col = colors,
+                                     title = "Relational-layer MNet Features")
+pca_res_RelatFeatures$PCAplots$pca_plot
+pca_res_RelatFeatures$PCAplots$bar_plot
+
+#########
+### Intra, Inter, All and Relational Features
+allFeatures <- cbind(GlobalIntra_norm[, -ncol(GlobalIntra_norm)],
+                     GlobalInter_norm[, -ncol(GlobalInter_norm)],
+                     GlobalAll_norm[, -ncol(GlobalAll_norm)],
+                     GlobalRelat_norm)
+
+pca_res_allFeatures <- pca_results(allFeatures, col = colors, 
+                                   title = "MNet Features")
+pca_res_allFeatures$PCAplots$pca_plot
+pca_res_allFeatures$PCAplots$bar_plot
+
+
+#########
+## save PCA results
+save(GlobalIntra_norm, GlobalInter_norm,
+     GlobalAll_norm, GlobalRelat_norm,
+     allFeatures,
+     pca_res_IntraFeatures,
+     pca_res_InterFeatures,
+     pca_res_AllFeatures,
+     pca_res_RelatFeatures,
+     pca_res_allFeatures,
+     file = paste0("results/PCA_results.RData"))
