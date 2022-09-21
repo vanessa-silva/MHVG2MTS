@@ -8,7 +8,8 @@
 #################################################################
 
 ## load library
-library(mvtnorm)
+if (!require(mvtnorm))
+  install.packages('mvtnorm')
 
 
 ## function definiton

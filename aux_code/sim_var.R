@@ -10,7 +10,8 @@
 #################################################################
 
 ## load library
-library("mAr")
+if (!require(mAr))
+  install.packages('mAr')
 
 
 ## var simulation function definiton

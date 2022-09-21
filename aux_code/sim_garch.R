@@ -11,7 +11,8 @@
 #################################################################
 
 ## load library
-library("ccgarch")
+if (!require(ccgarch))
+  install.packages('ccgarch')
 
 
 ## garch simulation function definiton

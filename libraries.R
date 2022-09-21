@@ -3,26 +3,36 @@
 #####################################################
 
 ## utils 
-library(dplyr)
-library(reshape2)
+if (!require(dplyr)) 
+  install.packages('dplyr')
+if (!require(reshape2))
+  install.packages('reshape2')
 
 ## time series
-library(forecast)
+if (!require(forecast))
+  install.packages('forecast')
 
 ## tables
-library(kableExtra)
-library(formattable)
+if (!require(kableExtra))
+  install.packages('kableExtra')
+if (!require(formattable))
+  install.packages('formattable')
 
 ## plots
-library(ggplot2)
-library(corrplot)
+if (!require(ggplot2))
+  install.packages('ggplot2')
+if (!require(corrplot))
+  install.packages('corrplot')
 
 ## PCA
-library(factoextra)
+if (!require(factoextra))
+  install.packages('factoextra')
 
 ## clustering
-library(cluster)
+if (!require(cluster))
+  install.packages('cluster')
 
 ## evaluation measures
-library(aricode)
+if (!require(aricode))
+  install.packages('aricode')
 
