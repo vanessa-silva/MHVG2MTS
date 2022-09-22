@@ -369,6 +369,7 @@ plots_pca <- function(pca, true_classes, ncp, col, title = "MNet Features") {
                             pointsize = 2,
                             addEllipses = TRUE,
                             labelsize = 5,
+                            title = paste0("PCA: ", title),
                             #alpha.var ="contrib",
                             col.var = "contrib",
                             gradient.cols = c("#F0E009", "#DC5F96", "#604B70"), ## yellow - violet - purple
@@ -377,13 +378,13 @@ plots_pca <- function(pca, true_classes, ncp, col, title = "MNet Features") {
                                                 color = "Contrib"#, alpha = "Contrib"
                                                 )
   ) + 
-    theme(axis.text.x = element_text(size = 8, face = "bold"),
-          axis.text.y = element_text(size = 8, face = "bold"),
-          axis.title.x = element_text(size = 14, face="bold"),
-          axis.title.y = element_text(size = 14, face="bold"),
-          legend.text = element_text(size = 9, face = "bold"),
-          legend.title = element_text(size = 10, face = "bold"),
-          plot.title = element_text(size = 16, face = "bold"),
+    theme(axis.text.x = element_text(size = 10, face = "bold"),
+          axis.text.y = element_text(size = 10, face = "bold"),
+          axis.title.x = element_text(size = 16, face="bold"),
+          axis.title.y = element_text(size = 16, face="bold"),
+          legend.text = element_text(size = 12, face = "bold"),
+          legend.title = element_text(size = 14, face = "bold"),
+          plot.title = element_text(size = 18, face = "bold.italic"),
           panel.background = element_rect(fill = "gray97",
                                           colour = "black",
                                           size = 0.5, linetype = "solid"))
@@ -400,11 +401,11 @@ plots_pca <- function(pca, true_classes, ncp, col, title = "MNet Features") {
     ggtitle("Contribution of Variables to All Dimensions") +
     xlab(title) +
     theme_minimal() +
-    theme(axis.text.x = element_text(size = 10, face = "bold"),
-          axis.text.y = element_text(size = 10, face = "bold"),
-          axis.title.x = element_text(size = 12, face="bold"),
-          axis.title.y = element_text(size = 12, face="bold"),
-          plot.title = element_text(size = 14, face = "bold"),
+    theme(axis.text.x = element_text(size = 14, face = "bold"),
+          axis.text.y = element_text(size = 14, face = "bold"),
+          axis.title.x = element_text(size = 16, face="bold"),
+          axis.title.y = element_text(size = 16, face="bold"),
+          plot.title = element_text(size = 18, face = "bold.italic"),
           panel.background = element_rect(fill = "gray97",
                                           colour = "black",
                                           size = 0.5, linetype = "solid"))
@@ -433,7 +434,7 @@ boxplot_clust <- function(df_data, y_title = "", main_title = "") {
           axis.title.x = element_text(size = 16, face="bold"),
           axis.title.y = element_text(size = 16, face="bold"),
           legend.position="none",
-          plot.title = element_text(size = 16, face = "bold.italic"),
+          plot.title = element_text(size = 18, face = "bold.italic"),
           panel.background = element_rect(fill = "white",
                                           colour = "grey80",
                                           size = .5, linetype = "solid"))
@@ -456,11 +457,11 @@ plots_clusters <- function(data, true_classes, cluster_fit, col, main_title = "C
     ggtitle(main_title) +
     scale_color_manual(values = col) +
     theme_minimal() +
-    theme(axis.text.x = element_text(size = 12, face = "bold"),
-          axis.text.y = element_text(size = 12, face = "bold"),
-          axis.title.x = element_text(size = 14, face="bold"),
-          axis.title.y = element_text(size = 14, face="bold"),
-          plot.title = element_text(size = 16, face = "bold"),
+    theme(axis.text.x = element_text(size = 14, face = "bold"),
+          axis.text.y = element_text(size = 14, face = "bold"),
+          axis.title.x = element_text(size = 16, face="bold"),
+          axis.title.y = element_text(size = 16, face="bold"),
+          plot.title = element_text(size = 18, face = "bold.italic"),
           legend.position="none",
           panel.background = element_rect(fill = "gray97",
                                           colour = "black",

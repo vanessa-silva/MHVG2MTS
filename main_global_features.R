@@ -136,7 +136,7 @@ colnames(GlobalIntra_norm) <- c("k_1", "d_1", "S_1", "Q_1",
                                 "Model")
 
 pca_res_IntraFeatures <- pca_results(GlobalIntra_norm, col = colors,
-                                     title = "Intra-layer MNet Features")
+                                     title = "Intra-layer Features")
 pca_res_IntraFeatures$PCAplots$pca_plot
 pca_res_IntraFeatures$PCAplots$bar_plot
 
@@ -146,7 +146,7 @@ colnames(GlobalInter_norm) <- c("k_1,2", "d_1,2", "S_1,2", "Q_1,2",
                                 "Model")
 
 pca_res_InterFeatures <- pca_results(GlobalInter_norm, col = colors,
-                                     title = "Inter-layer MNet Features")
+                                     title = "Inter-layer Features")
 pca_res_InterFeatures$PCAplots$pca_plot
 pca_res_InterFeatures$PCAplots$bar_plot
 
@@ -156,7 +156,7 @@ colnames(GlobalAll_norm) <- c("k", "d", "S", "Q",
                               "Model")
 
 pca_res_AllFeatures <- pca_results(GlobalAll_norm, col = colors,
-                                   title = "All-layer MNet Features")
+                                   title = "All-layer Features")
 pca_res_AllFeatures$PCAplots$pca_plot
 pca_res_AllFeatures$PCAplots$bar_plot
 
@@ -167,7 +167,7 @@ colnames(GlobalRelat_norm) <- c("r_1,2", "r_2,1",
                                 "Model")
 
 pca_res_RelatFeatures <- pca_results(GlobalRelat_norm, col = colors,
-                                     title = "Relational-layer MNet Features")
+                                     title = "Relational-layer Features")
 pca_res_RelatFeatures$PCAplots$pca_plot
 pca_res_RelatFeatures$PCAplots$bar_plot
 

@@ -86,20 +86,45 @@ multiplot(clustering_res_allFeatures$Best_k$plot.ari,
           cols = 3)
 clustering_res_allFeatures$ClusterPlot
 
+
+#########
+### table results
+table_eval <- data.frame("ARI" = c(clustering_res_IntraFeatures$Best_k$ari[5],
+                                   clustering_res_InterFeatures$Best_k$ari[5],
+                                   clustering_res_AllFeatures$Best_k$ari[5],
+                                   clustering_res_RelatFeatures$Best_k$ari[5],
+                                   clustering_res_allFeatures$Best_k$ari[5]),
+                         "NMI" = c(clustering_res_IntraFeatures$Best_k$nmi.sqrt[5],
+                                   clustering_res_InterFeatures$Best_k$nmi.sqrt[5],
+                                   clustering_res_AllFeatures$Best_k$nmi.sqrt[5],
+                                   clustering_res_RelatFeatures$Best_k$nmi.sqrt[5],
+                                   clustering_res_allFeatures$Best_k$nmi.sqrt[5]),
+                         "AS" = c(clustering_res_IntraFeatures$Best_k$silhouette[5],
+                                  clustering_res_InterFeatures$Best_k$silhouette[5],
+                                  clustering_res_AllFeatures$Best_k$silhouette[5],
+                                  clustering_res_RelatFeatures$Best_k$silhouette[5],
+                                  clustering_res_allFeatures$Best_k$silhouette[5]))
+row.names(table_eval) <- c("Intra-layer",
+                           "Inter-layer",
+                           "All-layer",
+                           "Relational",
+                           "MNet")
+
+
 ## beautify cluster plot
 ## clustering result to true k
 clustrs <- clustering_res_allFeatures$Clustering$cluster_fit$cluster
 a <- c()
 for (i in 1:length(clustrs)) {
-  if(clustrs[i] == 5)
+  if(clustrs[i] == 1)
     a[i] <- 1
-  else if(clustrs[i] == 1)
-    a[i] <- 2
-  else if(clustrs[i] == 4)
-    a[i] <- 3
   else if(clustrs[i] == 3)
-    a[i] <- 4
+    a[i] <- 2
   else if(clustrs[i] == 2)
+    a[i] <- 3
+  else if(clustrs[i] == 4)
+    a[i] <- 4
+  else if(clustrs[i] == 5)
     a[i] <- 5
   else if(clustrs[i] == 6)
     a[i] <- 6
@@ -136,4 +161,5 @@ save(clustering_res_IntraFeatures,
      clustering_res_AllFeatures,
      clustering_res_RelatFeatures,
      clustering_res_allFeatures,
+     table_eval,
      file = paste0("results/Clustering_results.RData"))
